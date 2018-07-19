@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 @Component
 public class RedisCache {
     @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 添加缓存数据

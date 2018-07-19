@@ -12,7 +12,14 @@
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
     <context:component-scan base-package="top.xjrlife.dynamic.controller" />
     <!-- 扩充了注解驱动，可以将请求参数绑定到控制器参数 -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                <property name="objectMapper" ref="customObjectMapper"></property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <bean id="customObjectMapper" class="top.xjrlife.dynamic.converters.CustomJsonDateConverter"></bean>
     <!-- 静态资源处理  css js imgs -->
     <!--<mvc:resources location="classpath:images/" mapping="/images/**"/>-->
     <!--<mvc:resources location="/js/" mapping="/js/**"/>-->
@@ -50,24 +57,36 @@
     </bean>
 
     <!-- 配置ViewResolver 。可用多个ViewResolver 。使用order属性排序。   InternalResourceViewResolver 放在最后-->
-    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="order" value="1"></property>
-        <property name="mediaTypes">
-            <map>
-                <!-- 告诉视图解析器，返回的类型为json格式 -->
-                <entry key="json" value="application/json" />
-                <entry key="xml" value="application/xml" />
-                <entry key="htm" value="text/htm" />
-            </map>
-        </property>
-        <property name="defaultViews">
-            <list>
-                <!-- ModelAndView里的数据变成JSON -->
-                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-            </list>
-        </property>
-        <property name="ignoreAcceptHeader" value="true"></property>
-    </bean>
+    <!--<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->
+        <!--<property name="order" value="1"></property>-->
+        <!--<property name="mediaTypes">-->
+            <!--<map>-->
+                <!--&lt;!&ndash; 告诉视图解析器，返回的类型为json格式 &ndash;&gt;-->
+                <!--<entry key="json" value="application/json" />-->
+                <!--<entry key="xml" value="application/xml" />-->
+                <!--<entry key="htm" value="text/htm" />-->
+            <!--</map>-->
+        <!--</property>-->
+        <!--<property name="defaultViews">-->
+            <!--<list>-->
+                <!--&lt;!&ndash; ModelAndView里的数据变成JSON &ndash;&gt;-->
+                <!--<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--<property name="ignoreAcceptHeader" value="true"></property>-->
+    <!--</bean>-->
+
+    <mvc:interceptors>
+        <!--  使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求   -->
+        <!-- <bean class="com.bybo.aca.web.interceptor.Login"/> -->
+        <mvc:interceptor>
+            <!-- 进行拦截：/**表示拦截所有controller -->
+            <mvc:mapping path="/**"/>
+            <!-- 不进行拦截 -->
+            <mvc:exclude-mapping path="/user/login"/>
+            <bean class="top.xjrlife.dynamic.filters.LoginFilter"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
