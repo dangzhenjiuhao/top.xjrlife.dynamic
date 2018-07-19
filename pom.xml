@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>top.xjrlife</groupId>
-  <artifactId>blog</artifactId>
+  <artifactId>dynamic</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>blog Maven Webapp</name>
+  <name>dynamic</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -21,6 +21,10 @@
     <!-- log4j日志文件管理包版本 -->
     <slf4j.version>1.7.7</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
+    <hibernate.validator.version>5.1.2.Final</hibernate.validator.version>
+    <javax.validation.version>1.1.0.Final</javax.validation.version>
+    <jackson.version>1.9.13</jackson.version>
+    <jackson.core.version>2.4.2</jackson.core.version>
   </properties>
 
   <dependencies>
@@ -44,7 +48,17 @@
       <version>3.5.4-beta</version>
     </dependency>
 
-
+    <!-- jsr303 validation dependencies-->
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>${javax.validation.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>${hibernate.validator.version}</version>
+    </dependency>
 
     <!-- spring核心包 -->
     <dependency>
@@ -237,7 +251,7 @@
         <version>2.2</version>
         <configuration>
           <!-- 指定项目部署的URL -->
-          <url>http://118.190.199.78:8080/manager/text</url>
+          <url>http://118.190.199.78:8088/manager/text</url>
           <username>admin</username>
           <password>217078</password>
           <!-- 指定项目部署路径,如果不设置为默认项目名称 -->
