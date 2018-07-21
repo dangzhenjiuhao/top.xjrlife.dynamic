@@ -11,6 +11,11 @@ import java.util.List;
  */
 public interface IUserService {
     User getUserById(Integer userId);
-    void login(String userName, String password) throws Exception;
+    String login(String userName, String password) throws Exception;
     Result list(Integer pageSize, Integer page) throws Exception;
+
+    void add(User entity) throws Exception;
+    void update(User entity) throws Exception;
+    void delete(Integer id) throws Exception;
+    void deletes(Integer[] ids) throws Exception;
 }

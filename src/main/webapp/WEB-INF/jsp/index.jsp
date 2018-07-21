@@ -9,7 +9,7 @@
     <title>xjrlife后台管理</title>
     <link rel="stylesheet" href="/frame/layui/css/layui.css">
     <link rel="stylesheet" href="/frame/static/css/style.css">
-    <link rel="icon" href="/frame/static/image/code.png">
+    <link rel="icon" href="/images/1.png">
 </head>
 <body>
 
@@ -27,6 +27,12 @@
         <!-- 顶部右侧添加选项卡监听 -->
         <ul class="layui-nav my-header-user-nav" lay-filter="side-top-right">
             <li class="layui-nav-item">
+                <a href="">控制台<span class="layui-badge">9</span></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="">个人中心<span class="layui-badge-dot"></span></a>
+            </li>
+            <li class="layui-nav-item">
                 <a class="name" href="javascript:;"><i class="layui-icon">&#xe629;</i>主题</a>
                 <dl class="layui-nav-child">
                     <dd data-skin="0"><a href="javascript:;">默认</a></dd>
@@ -35,7 +41,7 @@
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a class="name" href="javascript:;"><img src="/frame/static/image/code.png" alt="logo"> ${ user.userName} </a>
+                <a class="name" href="javascript:;"><img src="${ requestScope.user.headImgPath }" alt="logo" /> ${ requestScope.user.userName} </a>
                 <dl class="layui-nav-child">
                     <dd><a href="javascript:;" href-url="/demo/login.html"><i class="layui-icon">&#xe621;</i>登录页</a></dd>
                     <dd><a href="javascript:;" href-url="/demo/map.html"><i class="layui-icon">&#xe621;</i>图表</a></dd>
@@ -53,9 +59,9 @@
                 <li class="layui-nav-item  layui-nav-itemed">
                     <a href="javascript:;"><i class="layui-icon">&#xe620;</i>基础信息</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" href-url="/user/list_page"><i class="layui-icon">&#xe621;</i>用户管理</a></dd>
-                        <dd><a href="javascript:;" href-url="/demo/form.html"><i class="layui-icon">&#xe621;</i>权限管理</a></dd>
-                        <dd><a href="javascript:;" href-url="/demo/table.html"><i class="layui-icon">&#xe621;</i>角色管理</a></dd>
+                        <dd><a href="javascript:;" href-url="/user/list_page"><i class="layui-icon">&#xe770;</i>用户管理</a></dd>
+                        <dd><a href="javascript:;" href-url="/role/list_page"><i class="layui-icon">&#xe613;</i>权限管理</a></dd>
+                        <dd><a href="javascript:;" href-url="/demo/table.html"><i class="layui-icon">&#xe60c;</i>角色管理</a></dd>
                         <dd><a href="javascript:;" href-url="/demo/tab-card.html"><i class="layui-icon">&#xe621;</i>角色分配</a></dd>
                         <dd><a href="javascript:;" href-url="/demo/progress-bar.html"><i class="layui-icon">&#xe621;</i>权限分配</a></dd>
                     </dl>

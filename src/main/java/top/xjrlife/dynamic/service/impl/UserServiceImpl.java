@@ -2,6 +2,7 @@ package top.xjrlife.dynamic.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import top.xjrlife.dynamic.dao.UserMapper;
@@ -13,7 +14,9 @@ import top.xjrlife.dynamic.tools.MD5Utils;
 import top.xjrlife.dynamic.tools.RedisCache;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 创建人：xjz
@@ -37,7 +40,7 @@ public class UserServiceImpl implements IUserService {
      * @param password
      * @throws Exception
      */
-    public void login(String userName, String password) throws Exception {
+    public String login(String userName, String password) throws Exception {
         if (StringUtils.isEmpty(userName)){
             throw new Exception("用户名不能为空");
         }
@@ -53,9 +56,18 @@ public class UserServiceImpl implements IUserService {
             throw new Exception("用户名或密码错误");
         }
         //缓存到redis
-        redisCache.putCacheWithExpireTime("currentUser",userList.get(0),7200);//缓存2小时
+        String userKey = UUID.randomUUID().toString().replace("-", "").toLowerCase();
+        redisCache.putCacheWithExpireTime(userKey,userList.get(0),7200);//缓存2小时
+        return userKey;
     }
 
+    /**
+     * 获取用户列表
+     * @param pageSize
+     * @param page
+     * @return
+     * @throws Exception
+     */
     public Result list(Integer pageSize, Integer page) throws Exception {
         Result result = new Result();
         PageHelper.startPage(page,pageSize);
@@ -68,5 +80,46 @@ public class UserServiceImpl implements IUserService {
         return result;
     }
 
+    /**
+     * 新增
+     * @param entity
+     * @throws Exception
+     */
+    public void add(User entity) throws Exception {
+        userDao.insert(entity);
+    }
 
+    /**
+     * 修改
+     * @param entity
+     * @throws Exception
+     */
+    public void update(User entity) throws Exception {
+        userDao.updateByPrimaryKey(entity);
+    }
+
+    /**
+     * 删除
+     * @param id
+     */
+    public void delete(Integer id) throws Exception{
+        if (id == null ){
+            throw new Exception("ID不能为空");
+        }
+        userDao.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 批量删除
+     * @param ids
+     */
+    public void deletes(Integer[] ids) throws Exception{
+        if (ids == null || ids.length == 0){
+            throw new Exception("ID不能为空");
+        }
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(Arrays.asList(ids));
+        userDao.deleteByExample(example);
+    }
 }

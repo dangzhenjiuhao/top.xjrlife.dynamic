@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>用户列表</title>
+    <title>角色列表</title>
     <link rel="stylesheet" href="/frame/layui/css/layui.css">
     <!--<link rel="stylesheet" href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">-->
     <link rel="stylesheet" href="/frame/static/css/style.css">
@@ -31,13 +31,6 @@
 </div>
 
 <!-- 表格 -->
-<script type="text/html" id="userTypeTpl">
-    {{# if(d.userType===0){ }}
-    普通用户
-    {{# }else if(d.userType===1){ }}
-    管理员
-    {{# } }}
-</script>
 <script type="text/html" id="isAvailableTpl">
     {{# if(d.isAvailable===0){ }}
     已禁用
@@ -45,13 +38,7 @@
     已启用
     {{# } }}
 </script>
-<script type="text/html" id="imgHeadPathTpl">
-    {{# if(d.headImgPath){ }}
-    <div><img width="40" height="40" src="{{ d.headImgPath}}" /></div>
-    {{# }else if(d.isAvailable===1){ }}
 
-    {{# } }}
-</script>
 <!-- 表格操作按钮集 -->
 <script type="text/html" id="barOption">
     <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
@@ -83,20 +70,15 @@
             , cols: [[                  //标题栏
                 {checkbox: true, sort: true, fixed: true, space: true}
                 , {field: 'id', title: 'ID', width: 80}
-                , {field: 'loginName', title: '登录名', width: 120, align: 'center'}
-                , {field: 'userName', title: '用户名', width: 120, align: 'center'}
-                , {field: 'userType', title: '类型', width: 100, templet: '#userTypeTpl', align: 'center'}
-                , {field: 'mobile', title: '手机', width: 120, align: 'center'}
-                , {field: 'headImgPath', title: '头像', width: 180,templet:'#imgHeadPathTpl', align: 'center' }
+                , {field: 'roleName', title: '角色名', width: 120, align: 'center'}
                 , {field: 'isAvailable', title: '状态', width: 90, templet: '#isAvailableTpl', align: 'center'}
                 , {field: 'sort', title: '排序', width: 70, align: 'center'}
                 , {field: 'createTime', title: '创建时间', width: 180, align: 'center'}
-                , {field: 'lastLoginTime', title: '上一次登录时间', width: 180, align: 'center'}
                 , {field: 'remark', title: '备注', width: 500, align: 'center'}
                 , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#barOption', align: 'center'} //这里的toolbar值是模板元素的选择器
             ]]
             , id: 'dataCheck'
-            , url: '/user/list'
+            , url: '/role/list'
             , method: 'get'
             , page: true
             , limits: [10, 30, 60, 90, 150, 300]
@@ -133,7 +115,7 @@
             }else{
                 layer.confirm('真的删除行么', function(index) {
                     $.ajax({
-                        url: "/user/deletes",
+                        url: "/role/deletes",
                         type: "GET",
                         data: {"ids": deleteIds},
                         success: function (data) {
@@ -168,7 +150,7 @@
                     layer.close(index);
                     /*向服务端发送删除指令*/
                     $.ajax({
-                        url : "/user/delete",
+                        url : "/role/delete",
                         type : "get",
                         data : {'id' : data.id},
                         success : function(data) {
@@ -187,12 +169,12 @@
                  */
                 layer.open({
                     type: 2,
-                    title: ['修改用户'],//'新增用户',
+                    title: ['修改角色'],//'新增用户',
                     area:  ['500px', '700px'],
                     anim: 6,
                     resize: false,
                     fixed: true,
-                    content: '/user/update_page?id=' + data.id,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                    content: '/role/update_page?id=' + data.id,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
                     btn: ['提交', '取消'],
                     yes: function(index, layero){
                         var iframeWindow = window['layui-layer-iframe'+ index]
@@ -227,12 +209,12 @@
             */
             layer.open({
                 type: 2,
-                title: ['新增用户'],//'新增用户',
+                title: ['新增角色'],//'新增用户',
                 area:  ['500px', '700px'],
                 anim: 6,
                 resize: false,
                 fixed: true,
-                content: '/user/add_page',//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                content: '/role/add_page',//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
                 btn: ['提交', '取消'],
                 yes: function(index, layero){
                     var iframeWindow = window['layui-layer-iframe'+ index]

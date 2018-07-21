@@ -77,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, login_name, login_password, user_name, user_type, mobile, head_img_path, is_available, 
-    sort, create_time, last_login_time
+    sort, create_time, last_login_time, remark
   </sql>
   <sql id="Blob_Column_List">
     remark
@@ -371,7 +371,8 @@
       is_available = #{isAvailable,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

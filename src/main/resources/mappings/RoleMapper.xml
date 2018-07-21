@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, role_name, is_available, sort, create_time
+    id, role_name, is_available, sort, create_time, remark
   </sql>
   <sql id="Blob_Column_List">
     remark
@@ -224,7 +224,8 @@
       role_name = #{record.roleName,jdbcType=VARCHAR},
       is_available = #{record.isAvailable,jdbcType=INTEGER},
       sort = #{record.sort,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

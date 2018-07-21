@@ -29,13 +29,7 @@ public class RoleServiceImplTest {
 
     @Test
     public void addRole() {
-        Role role = new Role();
-        role.setRoleName("test");
-        role.setSort(100);
-        role.setRemark("test");
-        role.setIsAvailable(1);
-        roleService.addRole(role);
-        logger.info(JSON.toJSONString(role));
+
     }
 
     @Test
