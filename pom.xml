@@ -251,7 +251,7 @@
         <version>2.2</version>
         <configuration>
           <!-- 指定项目部署的URL -->
-          <url>http://118.190.199.78:8088/manager/text</url>
+          <url>http://118.200.199.78:8088/manager/text</url>
           <username>admin</username>
           <password>217078</password>
           <!-- 指定项目部署路径,如果不设置为默认项目名称 -->
